@@ -1,37 +1,52 @@
-module.exports = {
-  success: (item) => {
-    let enhance = item.enhancement;
-    let name = item.name;
-    if (enhance < 15) {
-      enhance++
-    } else {
-      switch (enhance) {
-        case 15:
-        enhance = 'PRI'
-        break;
-        case 'PRI':
-        enhance = 'DUO'
-        break;
-        case 'DUO':
-        enhance = 'TRI'
-        break;
-        case 'TRI':
-        enhance = 'TET'
-        break;
-        case 'TET': 
-        enhance = 'PEN'
-        break;
-        default:
-        enhance = 'failed'
-      }
-    }
+const enhancedLevels = ['PRI', 'DUO', 'TRI', 'TET', 'PEN']
 
-    name = enhance < 15 ? `[+${enhance}]` + name : name;
-
-    return {
-      ...item,
-      enhancement: enhance,
-      name: name
-    }
+const success = (successItem) => {
+  let successEnhancement = successItem.enhancement;
+  let successName = successItem.name;
+  if (successEnhancement < 15) {
+    successEnhancement++
+  } else if (successEnhancement === 15) {
+    successEnhancement = 'PRI'
+  } else {
+    const indexOfEnhanced = enhancedLevels.indexOf(successEnhancement);
+    successEnhancement = enhancedLevels[indexOfEnhanced + 1]
   }
+
+  successName = successEnhancement <= 15 ? `[+${successEnhancement}]` + successName : `[${successEnhancement}]` + successName;
+
+  return {
+    ...successItem,
+    enhancement: successEnhancement,
+    name: successName
+  }
+}
+
+const fail = (failItem) => {
+  let failEnhancement = failItem.enhancement;
+  let failName = failItem.name;
+  let failDurability = failItem.durability;
+
+  if(enhancedLevels.includes(failEnhancement)) {
+    const indexOfCurrentEnhancement = enhancedLevels.indexOf(failEnhancement)
+    failEnhancement === 'PRI' ? failEnhancement = 15 : failEnhancement = enhancedLevels[indexOfCurrentEnhancement - 1]
+  }
+
+  if(failEnhancement < 15) {
+    failDurability = failDurability - 5;
+  } else {
+    failDurability = failDurability - 10;
+  };
+
+  failName = failEnhancement <= 15 ? `[+${failEnhancement}]` + failName : `[${failEnhancement}]` + failName;
+
+  return {
+    ...failItem,
+    durability: failDurability,
+    enhancement: failEnhancement,
+    name: failName
+  } ;
+}
+module.exports = {
+  success,
+  fail,
 }
