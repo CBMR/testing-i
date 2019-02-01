@@ -43,7 +43,21 @@ const fail = (failItem) => {
     name: name
   } ;
 }
+
+const repair = (repairItem) => {
+  let {enhancement, name, durability} = repairItem;
+
+  name = enhancement <= 15 ? `[+${enhancement}]` + name : `[${enhancement}]` + name;
+  durability = 100;
+  
+  return {
+    ...repairItem,
+    name: name,
+    durability: durability
+  }
+}
 module.exports = {
   success,
   fail,
+  repair
 }

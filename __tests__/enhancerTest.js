@@ -28,3 +28,10 @@ describe('testing the fail method', () => {
     expect(newArmour[2]).toEqual(armours[7])
   });
 })
+
+const repairArmour = armours.map(enhancer.repair)
+describe('testing the repair method', () => {
+  test('when an item is returned item goes to 100 durability', () => {
+    expect(repairArmour[3]).toEqual(repairArmour[8])
+  })
+})

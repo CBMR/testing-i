@@ -164,6 +164,12 @@ const armours = [
     durability: 90,
     enhancement: 'DUO',
   },
+  {
+    name: 'nordic',
+    type: 'armour',
+    durability: 100,
+    enhancement: 7,
+  },
 ]
 
 module.exports = {
