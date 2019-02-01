@@ -25,7 +25,7 @@ const fail = (failItem) => {
 
   if(enhancedLevels.includes(enhancement)) {
     const indexOfCurrentEnhancement = enhancedLevels.indexOf(enhancement)
-    enhancement === 'PRI' ? enhancement = 15 : enhancement = enhancedLevels[indexOfCurrentEnhancement - 1]
+    enhancement === 'PRI' ? null : enhancement = enhancedLevels[indexOfCurrentEnhancement - 1]
   }
 
   if(enhancement < 15) {
@@ -49,7 +49,7 @@ const repair = (repairItem) => {
 
   name = enhancement <= 15 ? `[+${enhancement}]` + name : `[${enhancement}]` + name;
   durability = 100;
-  
+
   return {
     ...repairItem,
     name: name,
