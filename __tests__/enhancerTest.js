@@ -1,22 +1,45 @@
 const enhancer = require('../enhancer');
-const { weapons, armours } = require('../items')
 
-const newWeapon = weapons.map(enhancer.success);
-
+// const newWeapon = weapons.map(enhancer.success);
+const Weapons = {
+  name: 'longsword',
+  type: 'weapon',
+  durability: 100,
+  enhancement: 0,
+  }
 
 describe('testing the success method', () => {
   test('item enhancement increases by 1', () => {
-    expect(newWeapon[0]).toEqual(weapons[8])
-    expect(newWeapon[1]).toEqual(weapons[9])
-    expect(newWeapon[2]).toEqual(weapons[10])
-    expect(newWeapon[3]).toEqual(weapons[11])
-    expect(newWeapon[4]).toEqual(weapons[12])
-    expect(newWeapon[5]).toEqual(weapons[13])
-    expect(newWeapon[6]).toEqual(weapons[14])
+    const weapon = Weapons;
+    expect(enhancer.success(weapon).enhancement).toEqual(1)
   });
+
+  test('when enhancement goes from 15 to PRI', () => {
+    const weapon = Weapons;
+    weapon.enhancement = 15;
+    expect(enhancer.success(weapon).enhancement).toEqual('PRI')
+  });
+
+  test('that enhances goes from one string level to the other', () => {
+    const weapon = Weapons;
+    weapon.enhancement = 'PRI'
+    expect(enhancer.success(weapon).enhancement).toEqual('DUO')
+  });
+
+  test('that the name reflects the enhancement level with sub 15 levels', () => {
+    const weaponOne = Weapons;
+      weaponOne.enhancement = 6;
+      console.log(weaponOne);
+      expect(enhancer.success(weaponOne).name).toEqual('[+7]longsword');
+    })
+    
+    test('that the name reflects the enhancement level with levels above 15', () => {
+      const weapon = Weapons;
+      weapon.enhancement = 'DUO'
+      expect(enhancer.success(weapon).name).toBe('[TRI]longsword')
+  })
 })
 
-const newArmour = armours.map(enhancer.fail)
 
 describe('testing the fail method', () => {
   test('durabilty decreases', () => {
@@ -29,7 +52,7 @@ describe('testing the fail method', () => {
   });
 })
 
-const repairArmour = armours.map(enhancer.repair)
+
 describe('testing the repair method', () => {
   test('when an item is returned item goes to 100 durability', () => {
     expect(repairArmour[3]).toEqual(repairArmour[8])
